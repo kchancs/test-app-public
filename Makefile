@@ -1,4 +1,4 @@
-# Makefile for sample app deployed on k3s
+# Makefile for sample app deployed on sudo k3s
 # Define variables
 PROJECT_NAME := webapp
 IMAGE_NAME := webapp
@@ -15,15 +15,15 @@ build:
 
 # Target to push the Docker image to a remote registry
 push:
-	@echo "--- Pushing Docker image $(IMAGE_REF) to k3s registry ---"
+	@echo "--- Pushing Docker image $(IMAGE_REF) to sudo k3s registry ---"
 	sudo docker save $(IMAGE_REF) -o $(IMAGE_TAR)
-	k3s ctr images import $(IMAGE_TAR)
+	sudo k3s ctr images import $(IMAGE_TAR)
 
 # Target to deploy the service to a cluster
 deploy-dev:
-	@echo "--- Deploying $(IMAGE_REF) to k3s DEV ---"
-	k3s kubectl apply -f k8s/ -n dev
+	@echo "--- Deploying $(IMAGE_REF) to sudo k3s DEV ---"
+	sudo k3s kubectl apply -f ../k8s/ -n dev
 
 deploy-prod:
-	@echo "--- Deploying $(IMAGE_REF) to k3s PROD ---"
-	k3s kubectl apply -f k8s/ -n prod
+	@echo "--- Deploying $(IMAGE_REF) to sudo k3s PROD ---"
+	sudo k3s kubectl apply -f ../k8s/ -n prod
