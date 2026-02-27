@@ -11,19 +11,19 @@ IMAGE_TAR := $(IMAGE_NAME)-$(IMAGE_VERSION).tar
 # Target to build the Docker image
 build:
 	@echo "--- Building Docker image $(IMAGE_REF) ---"
-	docker build -t $(IMAGE_REF) .
+	sudo docker build -t $(IMAGE_REF) .
 
 # Target to push the Docker image to a remote registry
 push:
 	@echo "--- Pushing Docker image $(IMAGE_REF) to k3s registry ---"
-	docker save $(IMAGE_REF) -o $(IMAGE_TAR)
+	sudo docker save $(IMAGE_REF) -o $(IMAGE_TAR)
 	k3s ctr images import $(IMAGE_TAR)
 
 # Target to deploy the service to a cluster
 deploy-dev:
 	@echo "--- Deploying $(IMAGE_REF) to k3s DEV ---"
-	kubectl apply -f k8s/ -n dev
+	k3s kubectl apply -f k8s/ -n dev
 
 deploy-prod:
 	@echo "--- Deploying $(IMAGE_REF) to k3s PROD ---"
-	kubectl apply -f k8s/ -n prod
+	k3s kubectl apply -f k8s/ -n prod
