@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-	return "<h1>hello world</h1>"
+	return "hello world"
 
 @app.route("/healthz")
 def health():
@@ -13,10 +13,7 @@ def health():
 
 @app.route("/info")
 def info():
-	return jsonify(
-		hostname=socket.gethostname(),
-		environment=os.environ.get("APP_ENV", "dev")
-	)
+	return jsonify(hostname=socket.gethostname())
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8090)	
